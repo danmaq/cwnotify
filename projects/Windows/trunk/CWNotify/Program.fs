@@ -2,6 +2,7 @@
 
 open System
 open System.Threading
+open System.Timers
 open System.Windows.Forms
 
 let APP_NAME = "ChatWork Notify";
@@ -11,11 +12,12 @@ let CW_API_KEY = "CW_API_KEY";
 /// <param name="argv">Arguments.</param>
 /// <returns>Exit code (0).</returns>
 let mutexMain argv =
-    if Environment.GetEnvironmentVariable(CW_API_KEY, EnvironmentVariableTarget.User) = null then
+    let apikey = Environment.GetEnvironmentVariable(CW_API_KEY, EnvironmentVariableTarget.User)
+    if apikey = null then
         MessageBox.Show("set CW_API_KEY=<your ChatWork API key>", APP_NAME) |> ignore
         2
     else
-        Notify.start APP_NAME
+        Notify.start APP_NAME apikey
         0
 
 /// <summary>Entry Point.</summary>

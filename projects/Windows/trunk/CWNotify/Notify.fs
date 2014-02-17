@@ -2,6 +2,7 @@
 
 open System
 open System.Drawing
+open System.Net
 open System.Reflection
 open System.Runtime.InteropServices
 open System.Windows.Forms
@@ -29,6 +30,23 @@ extern IntPtr GetDesktopWindow();
 extern [<MarshalAs(UnmanagedType.Bool)>] bool SetForegroundWindow(IntPtr hWnd);
 
 /// <summary>
+/// Notification icon will not disappear even if pressing the Alt + F4 key.
+/// </summary>
+/// <param name="notify">Instance of notification icon.</param>
+/// <param name="cms">Instance of context menu.</param>
+let cancelAltF4 (notify: NotifyIcon) (cms:ContextMenuStrip) =
+    let setForeground = fun () -> SetForegroundWindow(GetDesktopWindow())
+    cms.PreviewKeyDown.Add <|
+        fun args -> if args.Alt then setForeground() |> ignore
+    cms.Closing.Add <|
+        fun args ->
+            let fi =
+                let bf = BindingFlags.NonPublic ||| BindingFlags.Instance
+                typeof<NotifyIcon>.GetField("window", bf)
+            let handle = (fi.GetValue(notify) :?> NativeWindow).Handle
+            if GetForegroundWindow() = handle then setForeground() |> ignore
+
+/// <summary>
 /// display a notification icon. If icon fails to display, and then retry automatically.
 /// </summary>
 /// <param name="notify">Instance of notification icon.</param>
@@ -40,27 +58,36 @@ let rec viewIcon (notify: NotifyIcon) prevTick =
         notify.Visible <- false
         viewIcon notify tick
 
-/// <summary>
-/// Notification icon will not disappear even if pressing the Alt + F4 key.
-/// </summary>
-/// <param name="notify">Instance of notification icon.</param>
-/// <param name="cms">Instance of context menu.</param>
-let cancelAltF4 (notify: NotifyIcon) (cms:ContextMenuStrip) =
-    let setForeground = fun () -> SetForegroundWindow(GetDesktopWindow()) |> ignore
-    cms.PreviewKeyDown.Add <|
-        fun args -> if args.Alt then setForeground()
-    cms.Closing.Add <|
-        fun args ->
-            let fi =
-                typeof<NotifyIcon>.GetField(
-                    "window", BindingFlags.NonPublic ||| BindingFlags.Instance)
-            if GetForegroundWindow() = (fi.GetValue(notify) :?> NativeWindow).Handle
-            then setForeground()
+let createTimer (notify: NotifyIcon) apikey =
+    let timer = new Timer()
+    timer.Interval <- 30 * 1000
+    timer.Tick.Add <| fun argv ->
+        let data =
+            async {
+                let client = new WebClient()
+                client.Headers.Add("X-ChatWorkToken", apikey)
+                let! result = client.AsyncDownloadString <| new Uri "https://api.chatwork.com/v1/my/status"
+                return result
+            } |> Async.RunSynchronously
+        let num =
+            Maybe.maybe
+                {
+                    let! status = data |> MyStatus.ParseJSON
+                    return status.unread_num
+                }
+        match num with
+            | Some n when n > 0 ->
+                notify.BalloonTipText <- String.Format("{0}件の新着", n)
+                notify.ShowBalloonTip(10000);
+                ()
+            | _ -> ()
+        ()
+    timer.Start()
+    timer
 
-let start appName =
-    let notify = new NotifyIcon()
-    //notify.BalloonTipText <- "FUGA"
-    notify.Text <- appName;
+let start appName apikey =
+    use notify = new NotifyIcon()
+    notify.Text <- appName
     notify.ContextMenuStrip <-
         let cms = new ContextMenuStrip()
         cancelAltF4 notify cms
@@ -68,5 +95,5 @@ let start appName =
         cms
     notify.Icon <- SystemIcons.Application
     viewIcon notify Environment.TickCount
-    Application.ApplicationExit.Add <| fun args -> notify.Dispose()
+    use timer = createTimer notify apikey
     Application.Run()
