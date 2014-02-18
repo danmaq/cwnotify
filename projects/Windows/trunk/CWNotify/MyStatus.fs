@@ -9,16 +9,24 @@ open System.Text
 /// <summary>Response of "my/status"</summary>
 [<DataContract>]
 type MyStatus() =
+
+    /// <summary></summary>
     [<DataMember>]
     member val unread_room_num = 0 with get, set
+
+    /// <summary></summary>
     [<DataMember>]
     member val mention_room_num = 0 with get, set
+
+    /// <summary></summary>
     [<DataMember>]
     member val mytask_room_num = 0 with get, set
 
-    /// <summary>Unread messages</summary>
+    /// <summary>Unread messages.</summary>
     [<DataMember>]
     member val unread_num = 0 with get, set
+
+    /// <summary></summary>
     [<DataMember>]
     member val mention_num = 0 with get, set
 
