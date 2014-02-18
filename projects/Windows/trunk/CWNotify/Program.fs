@@ -5,7 +5,10 @@ open System.Threading
 open System.Timers
 open System.Windows.Forms
 
+[<Literal>]
 let APP_NAME = "ChatWork Notify";
+
+[<Literal>]
 let CW_API_KEY = "CW_API_KEY";
 
 /// <summary>Entry Point.</summary>

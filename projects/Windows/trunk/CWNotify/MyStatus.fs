@@ -1,6 +1,6 @@
 ﻿module MyStatus
 
-open System
+open Printf
 open System.IO
 open System.Runtime.Serialization
 open System.Runtime.Serialization.Json
@@ -29,10 +29,9 @@ type MyStatus() =
     /// <summary>Returns a string that represents the current object.</summary>
     /// <returns>A string that represents the current object.</returns>
     override this.ToString() =
-        String.Format(
-            "MyStatus[unread_room_num:{0}, mention_room_num:{1}, mytask_room_num:{2}, unread_num:{3}, mention_num:{4}, mytask_num:{5}",
-            this.unread_room_num, this.mention_room_num, this.mytask_room_num, this.unread_num, this.mention_num, this.mytask_num)
-        
+        sprintf
+            "MyStatus[unread_room_num:%d, mention_room_num:%d, mytask_room_num:%d, unread_num:%d, mention_num:%d, mytask_num:%d"
+            this.unread_room_num this.mention_room_num this.mytask_room_num this.unread_num this.mention_num this.mytask_num
 
 /// <summary>Parsing JSON Strings.</summary>
 /// <param name="json">JSON Strings.</param>
