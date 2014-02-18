@@ -1,5 +1,6 @@
 ﻿module Notify
 
+open Printf
 open System
 open System.Drawing
 open System.Net
@@ -27,7 +28,7 @@ extern IntPtr GetDesktopWindow();
 /// </param>
 /// <returns>If the window was brought to the foreground, the return value is nonzero.</returns>
 [<DllImport(@"user32")>]
-extern [<MarshalAs(UnmanagedType.Bool)>] bool SetForegroundWindow(IntPtr hWnd);
+extern [<MarshalAs(UnmanagedType.Bool)>] bool SetForegroundWindow(nativeint hWnd);
 
 /// <summary>
 /// Notification icon will not disappear even if pressing the Alt + F4 key.
@@ -77,8 +78,8 @@ let createTimer (notify: NotifyIcon) apikey =
                 }
         match num with
             | Some n when n > 0 ->
-                notify.BalloonTipText <- String.Format("{0}件の新着", n)
-                notify.ShowBalloonTip(10000);
+                notify.BalloonTipText <- sprintf "%d 件の新着" n
+                notify.ShowBalloonTip 10000;
                 ()
             | _ -> ()
         ()
