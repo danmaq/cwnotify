@@ -60,6 +60,7 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Maybe.fs" />
     <Compile Include="MyStatus.fs" />
+    <Compile Include="CancelVanish.fs" />
     <Compile Include="Notify.fs" />
     <Compile Include="Program.fs" />
     <None Include="HISTORY.txt">
