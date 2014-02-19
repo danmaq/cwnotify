@@ -28,7 +28,7 @@ extern [<MarshalAs(UnmanagedType.Bool)>] bool SetForegroundWindow(nativeint hWnd
 
 /// <summary></summary>
 /// <returns>If the window was brought to the foreground, the return value is nonzero.</returns>
-let setForeground = fun () -> SetForegroundWindow(GetDesktopWindow())
+let setForeground() = SetForegroundWindow(GetDesktopWindow())
 
 /// <summary></summary>
 /// <param name="args">Event arguments.</param>
@@ -36,12 +36,13 @@ let onPreviewKeyDown (args:PreviewKeyDownEventArgs) =
     if args.Alt then setForeground() |> ignore
 
 /// <summary></summary>
+/// <param name="notify">NotifyIcon object.</param>
 /// <param name="args">Event arguments.</param>
 let onClosing notify args =
     let fi =
         let bf = BindingFlags.NonPublic ||| BindingFlags.Instance
         typeof<NotifyIcon>.GetField(@"window", bf)
-    match fi.GetValue(notify) with
+    match notify |> fi.GetValue with
         | :? NativeWindow as window
             when window.Handle = GetForegroundWindow() ->
                 setForeground() |> ignore
