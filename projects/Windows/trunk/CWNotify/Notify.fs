@@ -2,76 +2,56 @@
 
 open Printf
 open System
-open System.Drawing
-open System.Net
+open System.Media
 open System.Windows.Forms
-
-/// <summary>
-/// Notification icon will not disappear even if pressing the Alt + F4 key.
-/// </summary>
-/// <param name="notify">Instance of notification icon.</param>
-/// <param name="cms">Instance of context menu.</param>
-let cancelAltF4 notify (cms:ContextMenuStrip) =
-    cms.PreviewKeyDown.Add <| CancelVanish.onPreviewKeyDown
-    cms.Closing.Add <| CancelVanish.onClosing notify
 
 /// <summary>
 /// display a notification icon. If icon fails to display, and then retry automatically.
 /// </summary>
-/// <param name="notify">Instance of notification icon.</param>
+/// <param name="visible"></param>
 /// <param name="prevTick">previous tick time.</param>
-let rec viewIcon (notify: NotifyIcon) prevTick =
-    notify.Visible <- true
+let rec viewIcon visible prevTick =
+    true |> visible
     let tick = Environment.TickCount - prevTick
     if tick >= 4000 then
-        notify.Visible <- false
-        viewIcon notify tick
-
-let downloadAsync = fun () ->
-    ()
+        false |> visible
+        viewIcon visible tick
 
 /// <summary></summary>
-/// <param name="notify">Instance of notification icon.</param>
-/// <param name="apikey">API key of ChatWork.</param>
-let createTimer (notify: NotifyIcon) apikey =
-    let timer = new Timer()
-    timer.Interval <- 30 * 1000
-    timer.Tick.Add <| fun argv ->
-        let data =
-            async {
-                let client = new WebClient()
-                client.Headers.Add(@"X-ChatWorkToken", apikey)
-                let! result = client.AsyncDownloadString <| new Uri @"https://api.chatwork.com/v1/my/status"
-                return result
-            } |> Async.RunSynchronously
-        let num =
-            Maybe.maybe
-                {
-                    let! status = data |> MyStatus.ParseJSON
-                    return status.unread_num
-                }
-        match num with
-            | Some n when n > 0 ->
-                notify.BalloonTipText <- sprintf @"%d 件の新着" n
-                notify.ShowBalloonTip 10000;
-                ()
-            | _ -> ()
-        ()
-    timer.Start()
-    timer
+/// <param name="notify"></param>
+/// <param name="num"></param>
+let showBalloon (notify:NotifyIcon) num =
+    if num > 0 then
+        SystemSounds.Asterisk.Play()
+        notify.BalloonTipText <- sprintf @"%d 件の新着" num
+        notify.ShowBalloonTip 10000;
 
 /// <summary></summary>
-/// <param name="appName">Application name.</param>
-/// <param name="apikey">API key of ChatWork.</param>
-let start appName apikey =
+let showAbout() =
+    let product = Resources.productName
+    let msg =
+        sprintf
+            "%s Version %s\n\n%s\n%s"
+            product Resources.version Resources.copyright Resources.company
+    MessageBox.Show(msg, product) |> ignore
+
+/// <summary></summary>
+/// <param name="notify"></param>
+/// <returns>ContextMenuStrip object.</returns>
+let createContextMenuStrip notify =
+    let cms = new ContextMenuStrip()
+    cms.PreviewKeyDown.Add <| CancelVanish.onPreviewKeyDown
+    cms.Closing.Add <| CancelVanish.onClosing notify
+    ("&About" |> cms.Items.Add).Click.Add <| fun args -> showAbout()
+    ("E&xit" |> cms.Items.Add).Click.Add <| fun args -> Application.Exit()
+    cms
+
+/// <summary></summary>
+let start() =
     use notify = new NotifyIcon()
-    notify.Text <- appName
-    notify.ContextMenuStrip <-
-        let cms = new ContextMenuStrip()
-        cancelAltF4 notify cms
-        ("E&xit" |> cms.Items.Add).Click.Add <| fun args -> Application.Exit()
-        cms
-    notify.Icon <- SystemIcons.Application
-    viewIcon notify Environment.TickCount
-    use timer = createTimer notify apikey
+    notify.Text <- Resources.productName
+    notify.ContextMenuStrip <- createContextMenuStrip notify
+    notify.Icon <- Resources.icon
+    viewIcon (fun b -> notify.Visible <- b) Environment.TickCount
+    use timer = TimerLoop.createTimer (notify |> showBalloon)
     Application.Run()

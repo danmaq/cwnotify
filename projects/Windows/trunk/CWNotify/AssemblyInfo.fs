@@ -1,19 +1,18 @@
-﻿namespace CWNotify
+﻿module AssemblyInfo
 
 open System
 open System.Reflection
 open System.Resources
-open System.Runtime.CompilerServices
 open System.Runtime.InteropServices
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [<assembly: AssemblyTitle("ChatWork Notify")>]
-[<assembly: AssemblyDescription("")>]
-[<assembly: AssemblyConfiguration("")>]
-[<assembly: AssemblyCompany("dnmaq")>]
-[<assembly: AssemblyProduct("CWNotify")>]
+[<assembly: AssemblyDescription("ChatWorkの新着メッセージ通知を、メール通知よりも短いサイクルで行います。")>]
+[<assembly: AssemblyConfiguration("Stable")>]
+[<assembly: AssemblyCompany("danmaq <http://danmaq.com/>")>]
+[<assembly: AssemblyProduct("ChatWork Notify")>]
 [<assembly: AssemblyCopyright("Copyright © 2014 danmaq All rights reserved.")>]
 [<assembly: AssemblyTrademark("")>]
 
@@ -35,8 +34,8 @@ open System.Runtime.InteropServices
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[<assembly: AssemblyVersion("0.1.1.1")>]
-[<assembly: AssemblyFileVersion("0.1.1.1")>]
+[<assembly: AssemblyVersion("0.2.0.2")>]
+[<assembly: AssemblyFileVersion("0.2.0.2")>]
 [<assembly: NeutralResourcesLanguageAttribute("ja-JP")>]
 
 [<assembly: CLSCompliant(true)>]
