@@ -48,3 +48,7 @@ let icon =
 let apikey =
     let target = EnvironmentVariableTarget.User
     Environment.GetEnvironmentVariable(API_KEY_NAME, target)
+
+/// <summary>ChatWork API key.</summary>
+let aboutMessage =
+    sprintf "%s Version %s\n\n%s\n%s" productName version copyright company

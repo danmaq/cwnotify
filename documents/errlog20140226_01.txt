@@ -1,0 +1,103 @@
+Just-In-Time (JIT) デバッグを呼び出すための詳細については、
+ダイアログ ボックスではなく、このメッセージの最後を参照してください。
+
+************** 例外テキスト **************
+System.Net.WebException: リモート名を解決できませんでした。: 'api.chatwork.com'
+   場所 Microsoft.FSharp.Control.AsyncBuilderImpl.commit[a](Result`1 res)
+   場所 Microsoft.FSharp.Control.CancellationTokenOps.RunSynchronously[a](CancellationToken token, FSharpAsync`1 computation, FSharpOption`1 timeout)
+   場所 Microsoft.FSharp.Control.FSharpAsync.RunSynchronously[T](FSharpAsync`1 computation, FSharpOption`1 timeout, FSharpOption`1 cancellationToken)
+   場所 TimerLoop.getUnreadCount()
+   場所 TimerLoop.createTimer@37-4.Invoke(EventArgs argv)
+   場所 Microsoft.FSharp.Core.CompilerServices.RuntimeHelpers.h@749.Invoke(Object _arg1, TArgs args)
+   場所 System.Windows.Forms.Timer.TimerNativeWindow.WndProc(Message& m)
+   場所 System.Windows.Forms.NativeWindow.Callback(IntPtr hWnd, Int32 msg, IntPtr wparam, IntPtr lparam)
+
+
+************** 読み込まれたアセンブリ **************
+mscorlib
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18444 built by: FX451RTMGDR
+    コードベース:file:///C:/Windows/Microsoft.NET/Framework64/v4.0.30319/mscorlib.dll
+----------------------------------------
+CWNotify
+    アセンブリ バージョン:0.2.1.3
+    Win32 バージョン:0.2.1.3
+    コードベース:file:///C:/Users/nomura/CWNotify/CWNotify.exe
+----------------------------------------
+System.Windows.Forms
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/System.Windows.Forms/v4.0_4.0.0.0__b77a5c561934e089/System.Windows.Forms.dll
+----------------------------------------
+System.Drawing
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/System.Drawing/v4.0_4.0.0.0__b03f5f7f11d50a3a/System.Drawing.dll
+----------------------------------------
+System
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/System/v4.0_4.0.0.0__b77a5c561934e089/System.dll
+----------------------------------------
+System.Configuration
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/System.Configuration/v4.0_4.0.0.0__b03f5f7f11d50a3a/System.Configuration.dll
+----------------------------------------
+System.Xml
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/System.Xml/v4.0_4.0.0.0__b77a5c561934e089/System.Xml.dll
+----------------------------------------
+System.Runtime.Serialization
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/System.Runtime.Serialization/v4.0_4.0.0.0__b77a5c561934e089/System.Runtime.Serialization.dll
+----------------------------------------
+SMDiagnostics
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/SMDiagnostics/v4.0_4.0.0.0__b77a5c561934e089/SMDiagnostics.dll
+----------------------------------------
+System.ServiceModel.Internals
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/System.ServiceModel.Internals/v4.0_4.0.0.0__31bf3856ad364e35/System.ServiceModel.Internals.dll
+----------------------------------------
+System.RunTime.Serialization.resources
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/System.Runtime.Serialization.resources/v4.0_4.0.0.0_ja_b77a5c561934e089/System.Runtime.Serialization.resources.dll
+----------------------------------------
+mscorlib.resources
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/mscorlib.resources/v4.0_4.0.0.0_ja_b77a5c561934e089/mscorlib.resources.dll
+----------------------------------------
+System.resources
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/System.resources/v4.0_4.0.0.0_ja_b77a5c561934e089/System.resources.dll
+----------------------------------------
+System.Windows.Forms.resources
+    アセンブリ バージョン:4.0.0.0
+    Win32 バージョン:4.0.30319.18408 built by: FX451RTMGREL
+    コードベース:file:///C:/Windows/Microsoft.Net/assembly/GAC_MSIL/System.Windows.Forms.resources/v4.0_4.0.0.0_ja_b77a5c561934e089/System.Windows.Forms.resources.dll
+----------------------------------------
+
+************** JIT デバッグ **************
+Just-In-Time (JIT) デバッグを有効にするには、このアプリケーション、
+またはコンピューター (machine.config) の構成ファイルの jitDebugging 
+値を system.windows.forms セクションで設定しなければなりません。
+アプリケーションはまた、デバッグを有効にしてコンパイルされなければ
+なりません。
+
+例:
+
+<configuration>
+    <system.windows.forms jitDebugging="true" />
+</configuration>
+
+JIT デバッグが有効なときは、このダイアログ ボックスで処理するよりも、
+ハンドルされていない例外はすべてコンピューターに登録された
+JIT デバッガーに設定されなければなりません。

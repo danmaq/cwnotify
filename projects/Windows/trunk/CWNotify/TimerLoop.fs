@@ -14,7 +14,7 @@ let downloadAsync() =
     async {
         use client = new WebClient()
         client.Headers.Add(@"X-ChatWorkToken", Resources.apikey)
-        let uri = new Uri @"https://api.chatwork.com/v1/my/status"
+        let uri = Uri @"https://api.chatwork.com/v1/my/status"
         let! result = uri |> client.AsyncDownloadString
         return result
     } |> Async.RunSynchronously
