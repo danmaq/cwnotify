@@ -1,5 +1,0 @@
-﻿<Window xmlns="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
-        Title="Preference" Height="270" Width="480" Background="Black" WindowStyle="None">
-    <Grid Name="Field">
-    </Grid>
-</Window>

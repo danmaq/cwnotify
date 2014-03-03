@@ -1,6 +1,5 @@
 ﻿module Program
 
-open Printf
 open System
 open System.Threading
 open System.Windows.Forms
@@ -9,6 +8,7 @@ open System.Windows.Forms
 /// <param name="argv">Arguments.</param>
 /// <returns>Exit code.</returns>
 [<EntryPoint>]
+[<STAThread>]
 let main argv =
     use mutex = new Mutex(false, Resources.productName)
     if mutex.WaitOne(0, false) then

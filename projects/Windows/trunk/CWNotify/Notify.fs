@@ -1,6 +1,5 @@
 ﻿module Notify
 
-open Printf
 open System
 open System.Media
 open System.Windows.Forms
@@ -28,12 +27,10 @@ let showBalloon (notify:NotifyIcon) num =
 
 /// <summary></summary>
 let showAbout() =
-    let product = Resources.productName
-    let msg =
-        sprintf
-            "%s Version %s\n\n%s\n%s"
-            product Resources.version Resources.copyright Resources.company
-    MessageBox.Show(msg, product) |> ignore
+    MessageBox.Show(Resources.aboutMessage, Resources.productName) |> ignore
+
+let showPreference() =
+    Presentation.Starter.CreatePreference() |> ignore
 
 /// <summary></summary>
 /// <param name="notify"></param>
@@ -42,6 +39,7 @@ let createContextMenuStrip notify =
     let cms = new ContextMenuStrip()
     cms.PreviewKeyDown.Add <| CancelVanish.onPreviewKeyDown
     cms.Closing.Add <| CancelVanish.onClosing notify
+    ("&Preference" |> cms.Items.Add).Click.Add <| fun args -> showPreference()
     ("&About" |> cms.Items.Add).Click.Add <| fun args -> showAbout()
     ("E&xit" |> cms.Items.Add).Click.Add <| fun args -> Application.Exit()
     cms

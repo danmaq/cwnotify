@@ -1,6 +1,5 @@
 ﻿module MyStatus
 
-open Printf
 open System.IO
 open System.Runtime.Serialization
 open System.Runtime.Serialization.Json
@@ -46,7 +45,7 @@ type MyStatus() =
 /// <returns>If parsed JSON correctly, will return instance of <c>MyStatus</c>.</returns>
 let ParseJSON (json:string) =
     use stream = new MemoryStream(json |> Encoding.UTF8.GetBytes)
-    let serializer = new DataContractJsonSerializer(typeof<MyStatus>)
+    let serializer = DataContractJsonSerializer(typeof<MyStatus>)
     match stream |> serializer.ReadObject with
         | :? MyStatus as result -> Some result
         | _ -> None

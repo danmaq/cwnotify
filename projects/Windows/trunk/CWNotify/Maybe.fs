@@ -1,6 +1,6 @@
-﻿/// <summary>Maybe Monad.</summary>
-module Maybe
+﻿module Maybe
 
+/// <summary>Maybe Monad.</summary>
 type MaybeBuilder() =
 
     /// <summary>Called for <c>let!</c> and <c>do!</c> in computation expressions.</summary>
@@ -13,5 +13,5 @@ type MaybeBuilder() =
     member this.Return(x) =
         x |> Some
 
-/// <summary>Maybe Monad.</summary>
+/// <summary>Instance of Maybe Monad.</summary>
 let maybe = MaybeBuilder()
