@@ -30,7 +30,8 @@ let showAbout() =
     MessageBox.Show(Resources.aboutMessage, Resources.productName) |> ignore
 
 let showPreference() =
-    Presentation.Starter.CreatePreference() |> ignore
+    let result = Presentation.Starter.CreatePreference()
+    if not result then SystemSounds.Asterisk.Play()
 
 /// <summary></summary>
 /// <param name="notify"></param>
