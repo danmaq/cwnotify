@@ -15,8 +15,12 @@ let downloadAsync() =
         use client = new WebClient()
         client.Headers.Add(@"X-ChatWorkToken", Resources.apikey)
         let uri = Uri @"https://api.chatwork.com/v1/my/status"
-        let! result = uri |> client.AsyncDownloadString
-        return result
+        try
+            let! result = uri |> client.AsyncDownloadString
+            return result |> Some
+        with
+            | :? WebException as e -> return None
+            // TODO: 例外もみ消しは良くない
     } |> Async.RunSynchronously
 
 /// <summary></summary>
@@ -24,7 +28,8 @@ let downloadAsync() =
 let getUnreadCount() =
     Maybe.maybe
         {
-            let! status = downloadAsync() |> MyStatus.ParseJSON
+            let! json = downloadAsync()
+            let! status = json |> MyStatus.ParseJSON
             return status.unread_num
         }
 

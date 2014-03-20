@@ -6,10 +6,20 @@ namespace Presentation
 	public class Starter
 	{
 
-		public static void CreatePreference()
+		public static bool CreatePreference()
 		{
-			var result = new Preference();
-			result.Show();
+			var exist = Preference.Instance;
+			var result = exist == null;
+			if (result)
+			{
+				var window = new Preference();
+				window.Show();
+			}
+			else
+			{
+				exist.Focus();
+			}
+			return result;
 		}
 	}
 }
