@@ -14,13 +14,24 @@
     <Border BorderBrush="CornflowerBlue"
             BorderThickness="1">
         <Grid>
-            <TextBlock Text="Preference - ChatWork Notify" Foreground="Silver" Margin="5" FontSize="16" />
-            <StackPanel Orientation="Horizontal" Margin="5"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="192" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Preference - ChatWork Notify" Foreground="Silver" Margin="5" FontSize="16" />
+            <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top">
                 <Button Content="0" Style="{DynamicResource CaptionButtonStyleKey}" Name="ButtonMinimize" />
                 <Button Content="r" Style="{DynamicResource CaptionButtonStyleKey}" Name="ButtonClose" />
             </StackPanel>
+            
+            <Button Grid.Row="1" Content="Btn" Style="{DynamicResource ButtonStyle}" />
         </Grid>
     </Border>
 </Window>
